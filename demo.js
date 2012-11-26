@@ -1,8 +1,6 @@
 if (Meteor.isClient) {
   Session.set('greeting','Click to calculate.');
   Session.set('result','');
-  Session.set('first', null);
-  Session.set('second', null);
 
   Template.demo.greeting = function () {
     return Session.get('greeting');
@@ -14,11 +12,15 @@ if (Meteor.isClient) {
 
   Template.demo.events({
     'click input.calculate' : function () {
-      // template data, if any, is available in 'this'
+      var first = $('.first').val();
+      var second = $('.second').val();
+      var result = parseInt(first) + parseInt(second);
+
       Session.set('greeting','Good job!');
-      Session.set('result', Session.get('first'));
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+      Session.set('result', result);
+      // Is this really needed to maintain field values?
+      Session.set('first', first);
+      Session.set('second', second);
     }
   });
 }
